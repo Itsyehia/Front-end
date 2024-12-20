@@ -22,6 +22,9 @@ RUN ng build --configuration production --output-path=dist
 # Step 2: Set up Nginx to serve the production files
 FROM nginx:stable-alpine
 
+# Allow Nginx to write to the configuration directory
+RUN mkdir -p /tmp/nginx && chmod -R 777 /etc/nginx
+
 # Copy the Nginx configuration file
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
