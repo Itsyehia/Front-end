@@ -22,6 +22,10 @@ RUN ng build --configuration production --output-path=dist
 # Use nginx as the base image for serving the application
 FROM nginx:stable-alpine
 
+# Create writable temporary directories for Nginx (avoiding permission issues)
+RUN mkdir -p /tmp/client_temp /tmp/proxy_temp /tmp/fastcgi_temp /tmp/uwsgi_temp /tmp/scgi_temp && \
+    chmod -R 777 /tmp
+
 # Copy the built Angular files to the nginx web server
 COPY --from=build /opt/app/dist /usr/share/nginx/html
 
