@@ -1,5 +1,5 @@
-# Use Node.js as the base image
-FROM node:18-alpine
+# Step 1: Build the Angular application using Node.js
+FROM node:18-alpine as build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -16,8 +16,20 @@ RUN npm install
 # Copy the rest of the application source code
 COPY . .
 
-# Expose port 4200 to the host
-EXPOSE 4200
+# Build the Angular application for production
+RUN ng build --configuration production --output-path=dist
 
-# Run the Angular application using ng serve
-CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "4200"]
+# Step 2: Set up Nginx to serve the production files
+FROM nginx:stable-alpine
+
+# Copy the Nginx configuration file
+COPY ./nginx.conf /etc/nginx/nginx.conf
+
+# Copy the built Angular files from the build stage
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Expose port 8080 (because Nginx will serve the app on this port)
+EXPOSE 8080
+
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]
