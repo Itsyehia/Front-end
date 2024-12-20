@@ -1,5 +1,5 @@
-# Use Node.js as the base image
-FROM node:18-alpine
+# Use Node.js as the base image for building the application
+FROM node:18-alpine as build
 
 # Set the working directory inside the container
 WORKDIR /opt/app
@@ -16,14 +16,17 @@ RUN npm install
 # Copy the rest of the application source code
 COPY . .
 
-# Set permissions to allow OpenShift's default user to access the application
-RUN chmod -R g+rwX /opt/app && chown -R 1001:0 /opt/app
+# Build the Angular application for production
+RUN ng build --configuration production
 
-# Expose port 4200 for the Angular development server
-EXPOSE 4200
+# Use nginx as the base image for serving the application
+FROM nginx:stable-alpine
 
-# Use a non-root user (OpenShift assigns the user dynamically)
-USER 1001
+# Copy the built Angular files to the nginx web server
+COPY --from=build /opt/app/dist /usr/share/nginx/html
 
-# Run the Angular application using ng serve
-CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "4200"]
+# Expose port 80 for HTTP traffic
+EXPOSE 80
+
+# Start nginx server
+CMD ["nginx", "-g", "daemon off;"]
