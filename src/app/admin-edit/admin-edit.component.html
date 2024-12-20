@@ -1,0 +1,41 @@
+<app-admin-navbar></app-admin-navbar>
+<div class="container">
+  <h2>Order Details</h2>
+  <div *ngIf="orderDetails; else errorTemplate">
+    <p><strong>Order ID:</strong> {{ orderDetails.id }}</p>
+    <p><strong>Customer ID:</strong> {{ orderDetails.user_id }}</p>
+    <p><strong>Courier ID:</strong> {{ orderDetails.courier_id }}</p>
+    <p><strong>Pickup Location:</strong> {{ orderDetails.pickup_location }}</p>
+    <p><strong>Dropoff Location:</strong> {{ orderDetails.dropoff_location }}</p>
+    <p><strong>Package Details:</strong> {{ orderDetails.package_details }}</p>
+    <p><strong>Order Status:</strong> {{ orderDetails.status }}</p>
+    <p><strong>Created At:</strong> {{ orderDetails.created_at }}</p>
+    <p><strong>Updated At:</strong> {{ orderDetails.updated_at }}</p>
+  </div>
+
+  <ng-template #errorTemplate>
+    <div class="error-message">{{ errorMessages.general || 'Unable to load order details.' }}</div>
+  </ng-template>
+
+  <label for="courierSelect"> {{ orderDetails?.courier_id ? 'Reassign Courier' : 'Assign Courier' }}</label>
+  <div class="flex-row">
+    <select id="courierSelect" [(ngModel)]="selectedCourierId">
+      <option *ngFor="let courier of couriers" [value]="courier.id">{{ courier.username }}</option>
+    </select>
+    <button (click)="assignOrder()">
+      {{ orderDetails?.courier_id ? 'Reassign Courier' : 'Assign Courier' }}
+    </button>
+  </div>
+  <div *ngIf="successMessages.assign" class="success-message">{{ successMessages.assign }}</div>
+  <div *ngIf="errorMessages.assign" class="error-message">{{ errorMessages.assign }}</div>
+
+  <label for="statusSelect">Update Order Status:</label>
+  <div class="flex-row">
+    <select id="statusSelect" [(ngModel)]="selectedStatus">
+      <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+    </select>
+    <button (click)="updateOrderStatus()">Update Order Status</button>
+  </div>
+  <div *ngIf="successMessages.status" class="success-message">{{ successMessages.status }}</div>
+  <div *ngIf="errorMessages.status" class="error-message">{{ errorMessages.status }}</div>
+</div>
