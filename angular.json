@@ -43,7 +43,11 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "fileReplacements": [],
+              "define": {
+                  "API_URL": "https://shipping-backend-git-yehiashaikhoun-dev.apps.rm2.thpm.p1.openshiftapps.com/"
+              }
             },
             "development": {
               "buildOptimizer": false,
@@ -51,7 +55,10 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "define": {
+                "API_URL": "http://localhost:4300/"
+              }  
             }
           },
           "defaultConfiguration": "production"
