@@ -23,20 +23,20 @@ export class UserService {
   }
 
   createOrder(orderData: any): Observable<any> {
-    return this.http.post('http://localhost:4300/create-order', orderData);
+    return this.http.post('https://shipping-backend-git-yehiashaikhoun-dev.apps.rm2.thpm.p1.openshiftapps.com/create-order', orderData);
 
   }
 
   getOrderDetails(orderId: number): Observable<any> {
-    return this.http.get(`http://localhost:4300/get-order-details?order_id=${orderId}`);
+    return this.http.get(`https://shipping-backend-git-yehiashaikhoun-dev.apps.rm2.thpm.p1.openshiftapps.com/get-order-details?order_id=${orderId}`);
   }
 
   getUserOrders(userId: number): Observable<Order[]> {
-    return this.http.get<Order[]>(`http://localhost:4300/get-user-orders?user_id=${userId}`);
+    return this.http.get<Order[]>(`https://shipping-backend-git-yehiashaikhoun-dev.apps.rm2.thpm.p1.openshiftapps.com/get-user-orders?user_id=${userId}`);
   }
 
   deleteOrder(orderId: number): Observable<any> {
-    return this.http.delete(`http://localhost:4300/delete-order?order_id=${orderId}`);
+    return this.http.delete(`https://shipping-backend-git-yehiashaikhoun-dev.apps.rm2.thpm.p1.openshiftapps.com/delete-order?order_id=${orderId}`);
   }
 }
 

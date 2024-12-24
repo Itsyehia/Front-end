@@ -25,27 +25,27 @@ export class CourierService {
   }
 
   getAssignedOrders(courier_id: number): Observable<Order[]> {
-    return this.http.get<Order[]>(`http://localhost:4300/get-courier-orders?courier_id=${courier_id}`);
+    return this.http.get<Order[]>(`https://shipping-backend-git-yehiashaikhoun-dev.apps.rm2.thpm.p1.openshiftapps.com/get-courier-orders?courier_id=${courier_id}`);
   }
 
   getAcceptedOrders(courier_id: number): Observable<Order[]> {
-    return this.http.get<Order[]>(`http://localhost:4300/get-accepted-orders?courier_id=${courier_id}`);
+    return this.http.get<Order[]>(`https://shipping-backend-git-yehiashaikhoun-dev.apps.rm2.thpm.p1.openshiftapps.com/get-accepted-orders?courier_id=${courier_id}`);
   }
 
   getOrderDetails(orderId: number): Observable<Order> {
-    return this.http.get<Order>(`http://localhost:4300/get-order-details?order_id=${orderId}`);
+    return this.http.get<Order>(`https://shipping-backend-git-yehiashaikhoun-dev.apps.rm2.thpm.p1.openshiftapps.com/get-order-details?order_id=${orderId}`);
   }
 
   acceptOrder(orderId: number): Observable<any> {
-    return this.http.put(`http://localhost:4300/accept-order?order_id=${orderId}`, {});
+    return this.http.put(`https://shipping-backend-git-yehiashaikhoun-dev.apps.rm2.thpm.p1.openshiftapps.com/accept-order?order_id=${orderId}`, {});
   }
 
   declineOrder(orderId: number): Observable<any> {
-    return this.http.put(`http://localhost:4300/decline-order?order_id=${orderId}`, {});
+    return this.http.put(`https://shipping-backend-git-yehiashaikhoun-dev.apps.rm2.thpm.p1.openshiftapps.com/decline-order?order_id=${orderId}`, {});
   }
 
   updateOrderStatus(orderId: number, status: string): Observable<any> {
-    return this.http.put('http://localhost:4300/update-order-status-admin', {id: orderId, status: status});
+    return this.http.put('https://shipping-backend-git-yehiashaikhoun-dev.apps.rm2.thpm.p1.openshiftapps.com/update-order-status-admin', {id: orderId, status: status});
   }
 
 }
