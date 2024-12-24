@@ -27,7 +27,7 @@ export class AuthService {
 
   // Login method
   login(credentials: { email: string, password: string }): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>('http://localhost:4300/login', credentials).pipe(
+    return this.http.post<LoginResponse>('https://shipping-backend-git-yehiashaikhoun-dev.apps.rm2.thpm.p1.openshiftapps.com//login', credentials).pipe(
       tap(response => {
         if (response.message === 'Login successful') {
           this.userId = response.userId;
@@ -43,7 +43,7 @@ export class AuthService {
 
   // Register method
   register(user: { email: string, password: string }): Observable<RegisterResponse> {
-    return this.http.post<RegisterResponse>('http://localhost:4300/register', user);
+    return this.http.post<RegisterResponse>('https://shipping-backend-git-yehiashaikhoun-dev.apps.rm2.thpm.p1.openshiftapps.com//register', user);
   }
 
   getUserId(): number | null {
