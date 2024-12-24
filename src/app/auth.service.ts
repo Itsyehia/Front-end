@@ -18,6 +18,7 @@ interface RegisterResponse {
   providedIn: 'root'
 })
 export class AuthService {
+  private apiUrl = import.meta.env['API_URL'];
   private userId: number | null = null;
   private userType: string | null = null;
   private username: string | null = null;
@@ -27,7 +28,7 @@ export class AuthService {
 
   // Login method
   login(credentials: { email: string, password: string }): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>('https://shipping-backend-git-yehiashaikhoun-dev.apps.rm2.thpm.p1.openshiftapps.com/login', credentials).pipe(
+    return this.http.post<LoginResponse>('${this.apiUrl}/login', credentials).pipe(
       tap(response => {
         if (response.message === 'Login successful') {
           this.userId = response.userId;
@@ -43,7 +44,7 @@ export class AuthService {
 
   // Register method
   register(user: { email: string, password: string }): Observable<RegisterResponse> {
-    return this.http.post<RegisterResponse>('https://shipping-backend-git-yehiashaikhoun-dev.apps.rm2.thpm.p1.openshiftapps.com/register', user);
+    return this.http.post<RegisterResponse>('${this.apiUrl}/register', user);
   }
 
   getUserId(): number | null {
